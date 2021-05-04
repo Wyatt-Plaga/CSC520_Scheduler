@@ -1,0 +1,8 @@
+
+public class HillClimbing {
+	
+	HillClimbing() {
+		
+	}
+
+}

@@ -3,11 +3,26 @@ import java.util.ArrayList;
 public class Schedule {
 
 	ArrayList<Class> classes = new ArrayList<Class>();
-	ArrayList<Break> breaks = new ArrayList<Break>();
+	Scheduler scheduler;
 	
-	Schedule(ArrayList<Class> classes, ArrayList<Break> breaks) {
+	Schedule(ArrayList<Class> classes, Scheduler scheduler) {
 		this.classes = classes;
-		this.breaks = breaks;
+		this.scheduler = scheduler;
+	}
+	
+	int getScore() {
+		int score = 0;
+		for(Class desiredClass : scheduler.desiredClassList) {
+			if(classes.contains(desiredClass)) {
+				score += desiredClass.importance;
+			}
+		}
+//		for(Break desiredBreak : scheduler.desiredClassList) {
+//			if(classes.contains(desiredClass)) {
+//				score += desiredClass.importance;
+//			}
+//		}
+		return 0;
 	}
 
 }

@@ -7,16 +7,37 @@ public class Scheduler {
 	
 	int desiredClasses;
 	ArrayList<Class> desiredClassList = new ArrayList<Class>();
+	ArrayList<Class> allClassList = new ArrayList<Class>();
 	ArrayList<Break> breaks = new ArrayList<Break>();
 
 	public static void main(String[] args) {
 		Scheduler scheduler = new Scheduler();
+		scheduler.rosterIntake();
 		scheduler.fileIntake();
 		return;
 
 	}
+	
+	void rosterIntake() {
+		try {
+			File rosterFile = new File("classRoster.txt");
+			Scanner rosterReader = new Scanner(rosterFile);
+			while (rosterReader.hasNextLine()) {
+				String currentLine = rosterReader.nextLine();
+				String[] lineSplit = currentLine.split(" ");
+				Class klasse = new Class(this, lineSplit[0], lineSplit[1], lineSplit[2], lineSplit[3], lineSplit[5], lineSplit[6], lineSplit[7]);
+				allClassList.add(klasse);
+			}
+			System.out.println(allClassList.size());
+			rosterReader.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
+	}
 
 	void fileIntake() {
+
 		try {
 			File inputFile = new File("filename.txt");
 			Scanner inputReader = new Scanner(inputFile);
@@ -26,7 +47,7 @@ public class Scheduler {
 			String currentLine = inputReader.nextLine();
 			while (!currentLine.equals("Input any breaks (if any) you would like, along with their importance on a scale of 1-10 (ex. 9 AM - 10 AM 1):")) {
 				String[] lineSplit = currentLine.split(" ");
-				Class klasse = new Class(lineSplit[0], lineSplit[1], lineSplit[2]);
+				Class klasse = new Class(this, lineSplit[0], lineSplit[1], lineSplit[2]);
 				desiredClassList.add(klasse);
 				currentLine = inputReader.nextLine();
 			}
@@ -42,4 +63,13 @@ public class Scheduler {
 			e.printStackTrace();
 		}
 	}
+	
+	Schedule generateRandomSchedule() {
+		return null;
+	}
+	
+	boolean isTimeFree(double startTime, double endTime) {
+		return true;
+	}
+
 }
