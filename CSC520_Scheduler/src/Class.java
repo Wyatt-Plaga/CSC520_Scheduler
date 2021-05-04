@@ -9,8 +9,5 @@ public class Class {
 		this.subject = subject;
 		this.number = Integer.parseInt(numString);
 		this.importance = Integer.parseInt(numImport);
-		System.out.println(subject);
-		System.out.println(number);
-		System.out.println(importance);
 	}
 }

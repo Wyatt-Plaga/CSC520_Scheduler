@@ -7,6 +7,7 @@ public class Scheduler {
 	
 	int desiredClasses;
 	ArrayList<Class> desiredClassList = new ArrayList<Class>();
+	ArrayList<Break> breaks = new ArrayList<Break>();
 
 	public static void main(String[] args) {
 		Scheduler scheduler = new Scheduler();
@@ -30,8 +31,10 @@ public class Scheduler {
 				currentLine = inputReader.nextLine();
 			}
 			while(inputReader.hasNextLine()) {
-				String data = inputReader.nextLine();
-				System.out.println(data + " time");
+				currentLine = inputReader.nextLine();
+				String[] lineSplit = currentLine.split(" ");
+				Break pause = new Break(lineSplit[5], lineSplit[0], lineSplit[1], lineSplit[3], lineSplit[4]);
+				breaks.add(pause);
 			}
 			inputReader.close();
 		} catch (FileNotFoundException e) {
