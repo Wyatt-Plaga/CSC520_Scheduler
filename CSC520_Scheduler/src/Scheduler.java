@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Scheduler {
@@ -14,8 +15,8 @@ public class Scheduler {
 		Scheduler scheduler = new Scheduler();
 		scheduler.rosterIntake();
 		scheduler.fileIntake();
-		return;
-
+		HillClimbing search = new HillClimbing(scheduler);
+		search.printWinner();
 	}
 	
 	void rosterIntake() {
@@ -65,11 +66,12 @@ public class Scheduler {
 	}
 	
 	Schedule generateRandomSchedule() {
-		return null;
-	}
-	
-	boolean isTimeFree(double startTime, double endTime) {
-		return true;
+		Schedule schedule = new Schedule(this);
+		Random rand = new Random();
+		for(int i=0; i<desiredClasses; i++) {
+			schedule.classes.add(allClassList.get(rand.nextInt(2400)));
+		}
+		return schedule;
 	}
 
 }
