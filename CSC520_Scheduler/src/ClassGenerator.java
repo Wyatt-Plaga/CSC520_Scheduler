@@ -72,7 +72,7 @@ public class ClassGenerator {
 				classDay = "Fri";
 				break;
 		}
-		output = subject + classNumber + " " + classTime + " " + classDay + "\n";
+		output = subject + " " + classNumber + " " + classTime + " " + classDay + "\n";
 		return output;
 	}
 
