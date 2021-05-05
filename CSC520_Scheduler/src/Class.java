@@ -16,9 +16,9 @@ public class Class {
 		this.importance = Integer.parseInt(numImport);
 		for(Class klasse : scheduler.allClassList) {
 			if(klasse.subject.equals(subject) && klasse.number == number) {
-				klasse.startTime = startTime;
-				klasse.endTime = endTime;
-				klasse.day = day;
+				startTime = klasse.startTime;
+				endTime = klasse.endTime;
+				day = klasse.day;
 			}
 		}
 	}
@@ -41,6 +41,14 @@ public class Class {
 		endTime = endHour + endMinutes;
 		if(endMeridian.equals("PM")) {
 			endTime += 12;
+		}
+	}
+	
+	boolean matchingClass(Class klasse) {
+		if(subject.equals(klasse.subject) && number == klasse.number) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

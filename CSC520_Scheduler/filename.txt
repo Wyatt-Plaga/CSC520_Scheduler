@@ -4,7 +4,4 @@ Input which classes you would like to take along with their importance on a scal
 CSC 480 9
 CSC 112 7
 MA 101 4
-Input any breaks (if any) you would like, along with their importance on a scale of 1-10 (ex. 9 AM - 10 AM 1):
-8:00 AM - 11:30 AM 4
-11:30 AM - 1:00 PM 5
-7:00 PM - 8:15 PM 4
+Input any breaks (if any) you would like, along with their importance on a scale of 1-10 (ex. 9:00 AM - 10:00 AM 1):

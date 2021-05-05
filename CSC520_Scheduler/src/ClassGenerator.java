@@ -8,7 +8,7 @@ public class ClassGenerator {
 	public static void main(String[] args) {
 	    try {
 	    	FileWriter myWriter = new FileWriter("classRoster.txt");
-	    	for(int i=0; i<800; i++) {
+	    	for(int i=1; i<800; i++) {
 	    		myWriter.write(generateRandomClass(0, i));
 	    		myWriter.write(generateRandomClass(1, i));
 	    		myWriter.write(generateRandomClass(2, i));
