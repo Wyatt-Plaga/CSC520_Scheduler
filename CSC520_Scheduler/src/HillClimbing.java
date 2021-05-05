@@ -1,19 +1,24 @@
+import java.util.ArrayList;
 
 public class HillClimbing {
 	
 	Scheduler scheduler;
 	Schedule currentSchedule;
+	ArrayList<Schedule> bestCandidates = new ArrayList<Schedule>();
 	
 	HillClimbing(Scheduler scheduler) {
 		this.scheduler = scheduler;
-		currentSchedule = scheduler.generateRandomSchedule();
-		System.out.println("Starting schedule with score of " + currentSchedule.getScore());
-		for(Class klasse : currentSchedule.classes) {
-			System.out.println(klasse.subject + klasse.number);
+		for(int j=0; j<500; j++) {
+			currentSchedule = scheduler.generateRandomSchedule();
+			for(int i=0; i<5; i++) {
+				currentSchedule = currentSchedule.getBestNeighbor(i);
+			}
+			bestCandidates.add(currentSchedule);
 		}
-		for(int i=0; i<1000; i++) {
-			currentSchedule = currentSchedule.getBestNeighbor();
-			//System.out.println(currentSchedule.classes.size());
+		for(Schedule schedule : bestCandidates) {
+			if(schedule.getScore() > currentSchedule.getScore()) {
+				currentSchedule = schedule;
+			}
 		}
 	}
 	
@@ -23,11 +28,10 @@ public class HillClimbing {
 	
 	void printWinner() {
 		System.out.println("The best schedule for you is:");
-		System.out.println("With score: " + currentSchedule.getScore());
-		System.out.println(currentSchedule.classes.size());
 		for(Class klasse : currentSchedule.classes) {
 			System.out.println(klasse.subject + klasse.number + " at " + klasse.startTime + "-" + klasse.endTime);
 		}
+		System.out.println("With score: " + currentSchedule.getScore());
 	}
 
 }

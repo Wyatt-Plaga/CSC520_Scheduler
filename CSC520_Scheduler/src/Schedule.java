@@ -4,7 +4,6 @@ public class Schedule {
 
 	ArrayList<Class> classes = new ArrayList<Class>();
 	Scheduler scheduler;
-	int counter = 0;
 
 	Schedule(Scheduler scheduler) {
 		this.scheduler = scheduler;
@@ -20,10 +19,8 @@ public class Schedule {
 	}
 
 	int getScore() {
-		if(classes.size() == 0 && counter < 10) {
-			//System.out.println("No class size");
-			counter++;
-			return 0;
+		if(classes.size() < scheduler.desiredClasses) {
+			return -10;
 		}
 		int score = 0;
 		for(Class desiredClass : scheduler.desiredClassList) {
@@ -32,9 +29,6 @@ public class Schedule {
 					score += desiredClass.importance;
 				}
 			}
-		}
-		if(counter < 10 || true) {
-			//System.out.println("score from classes is " + score);
 		}
 		for(Break pause : scheduler.breaks) {
 			if(isTimeFree(pause.startTime, pause.endTime)) {
@@ -47,8 +41,6 @@ public class Schedule {
 	boolean hasClass(String subject, int number) {
 		for(Class klasse: classes) {
 			if(klasse.number == number && klasse.subject.equals(subject)) {
-				//System.out.println("comparing " + klasse.subject + klasse.number + " to " + subject + number);
-
 				return true;
 			}
 		}
@@ -67,22 +59,17 @@ public class Schedule {
 		return true;
 	}
 
-	Schedule getBestNeighbor() {
-		Schedule output = new Schedule(scheduler);
+	Schedule getBestNeighbor(int i) {
+		//Schedule output = new Schedule(scheduler);
+		Schedule output = this.cloneMe();
 		for(Class klasse : scheduler.allClassList) {
 			for(Class meineKlasse : classes) {
 				Schedule clone = this.cloneMe();
-				//System.out.println(clone.classes.size());
-				if(scheduler.desiredClassList.contains(klasse)) {
-					System.out.println("desired class");
-				}
 				if(!hasClass(klasse.subject, klasse.number)) {
 					clone.classes.remove(meineKlasse);
 					clone.classes.add(klasse);
-					//System.out.println(clone.classes.size());
-					//System.out.println(output.getScore());
 					if(clone.getScore() > output.getScore()) {
-
+						//System.out.println(i);
 						output = clone;
 					}
 				}

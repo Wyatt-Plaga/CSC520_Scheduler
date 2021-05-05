@@ -29,7 +29,6 @@ public class Scheduler {
 				Class klasse = new Class(this, lineSplit[0], lineSplit[1], lineSplit[2], lineSplit[3], lineSplit[5], lineSplit[6], lineSplit[7]);
 				allClassList.add(klasse);
 			}
-			System.out.println(allClassList.size());
 			rosterReader.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("An error occurred.");
@@ -69,7 +68,7 @@ public class Scheduler {
 		Schedule schedule = new Schedule(this);
 		Random rand = new Random();
 		for(int i=0; i<desiredClasses; i++) {
-			schedule.classes.add(allClassList.get(rand.nextInt(2400)));
+			schedule.classes.add(allClassList.get(rand.nextInt(2397)));
 		}
 		return schedule;
 	}

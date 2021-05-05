@@ -58,7 +58,7 @@ public class ClassGenerator {
 				classTime = "5:15 PM - 6:45 PM";
 				break;
 			case 6:
-				classTime = "7:00 PM - 7:30 PM";
+				classTime = "7:00 PM - 8:30 PM";
 				break;
 		}
 		switch(rand.nextInt(3)) {
