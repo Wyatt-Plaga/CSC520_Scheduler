@@ -19,6 +19,7 @@ public class Scheduler {
 	    HillClimbing hillSearch = new HillClimbing(scheduler);
 		System.out.println("Hill Search Completed...");
 		SimulatedAnnealing aSearch = new SimulatedAnnealing(scheduler);
+		System.out.println();
 		hillSearch.printWinner();
 		System.out.println();
 		aSearch.printWinner();

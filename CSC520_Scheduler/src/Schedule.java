@@ -72,6 +72,9 @@ public class Schedule {
 			if(startTime <= klasse.endTime && endTime >= klasse.endTime) {
 				return false;
 			}
+			if(startTime >= klasse.startTime && endTime <= klasse.endTime) {
+				return false;
+			}
 		}
 		return true;
 	}

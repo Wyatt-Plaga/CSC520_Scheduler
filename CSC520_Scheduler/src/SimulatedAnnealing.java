@@ -16,7 +16,7 @@ public class SimulatedAnnealing {
 			for(int i=0; i<numSteps; i++) {
 				currentSchedule = currentSchedule.getAnnealedNeighbor(i, this);
 			}
-			if(currentSchedule.getScore() > 100) {
+			if(currentSchedule.getScore() == 49) {
 				effCount++;
 			}
 			bestCandidates.add(currentSchedule);

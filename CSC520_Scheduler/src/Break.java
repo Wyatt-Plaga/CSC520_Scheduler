@@ -10,7 +10,7 @@ public class Break {
 		double startHour = Integer.parseInt(startSplit[0]);
 		double startMinutes = ((double) Integer.parseInt(startSplit[1]))/60;
 		startTime = startHour + startMinutes;
-		if(startMeridian.equals("PM")) {
+		if(startMeridian.equals("PM") && startHour != 12) {
 			startTime += 12;
 		}
 		String[] endSplit = endTimeString.split(":");

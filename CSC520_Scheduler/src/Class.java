@@ -48,7 +48,7 @@ public class Class {
 		double endHour = Integer.parseInt(endSplit[0]);
 		double endMinutes = ((double) Integer.parseInt(endSplit[1]))/60;
 		endTime = endHour + endMinutes;
-		if(endMeridian.equals("PM")) {
+		if(endMeridian.equals("PM") && startHour != 12) {
 			endTime += 12;
 		}
 	}
