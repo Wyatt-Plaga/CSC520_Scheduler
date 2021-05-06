@@ -5,13 +5,17 @@ public class HillClimbing {
 	Scheduler scheduler;
 	Schedule currentSchedule;
 	ArrayList<Schedule> bestCandidates = new ArrayList<Schedule>();
+	int effCount = 0;
 	
 	HillClimbing(Scheduler scheduler) {
 		this.scheduler = scheduler;
-		for(int j=0; j<100; j++) {
+		for(int j=0; j<50; j++) {
 			currentSchedule = scheduler.generateRandomSchedule(0);
 			for(int i=0; i<4; i++) {
 				currentSchedule = currentSchedule.getBestNeighbor(i);
+			}
+			if(currentSchedule.getScore() > 100) {
+				effCount++;
 			}
 			bestCandidates.add(currentSchedule);
 		}

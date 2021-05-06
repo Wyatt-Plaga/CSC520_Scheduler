@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Schedule {
 
@@ -88,7 +89,6 @@ public class Schedule {
 	}
 
 	Schedule getBestNeighbor(int i) {
-		//Schedule output = new Schedule(scheduler);
 		Schedule output = this.cloneMe();
 		for(Class klasse : scheduler.allClassList) {
 			for(Class meineKlasse : classes) {
@@ -97,7 +97,6 @@ public class Schedule {
 					clone.classes.remove(meineKlasse);
 					clone.classes.add(klasse);
 					if(clone.getScore() > output.getScore()) {
-						//System.out.println(i);
 						output = clone;
 					}
 				}
@@ -106,9 +105,21 @@ public class Schedule {
 		return output;
 	}
 	
-	Schedule getAnnealedNeighbor(int i, SimmulatedAnnealing algorithm) {
-		//Schedule output = new Schedule(scheduler);
+	Schedule getAnnealedNeighbor(int i, SimulatedAnnealing algorithm) {
 		Schedule output = this.cloneMe();
+		for(Class klasse : scheduler.desiredClassList) {
+			for(Class meineKlasse : classes) {
+				Schedule clone = this.cloneMe();
+				if(!hasClass(klasse.subject, klasse.number)) {
+					clone.classes.remove(meineKlasse);
+					clone.classes.add(klasse);
+					if(algorithm.pFunction(output.getScore(),clone.getScore(),i)) {
+						output = clone;
+						return output;
+					}
+				}
+			}
+		}
 		for(Class klasse : scheduler.allClassList) {
 			for(Class meineKlasse : classes) {
 				Schedule clone = this.cloneMe();
@@ -116,8 +127,8 @@ public class Schedule {
 					clone.classes.remove(meineKlasse);
 					clone.classes.add(klasse);
 					if(algorithm.pFunction(output.getScore(),clone.getScore(),i)) {
-						//System.out.println(i);
 						output = clone;
+						return output;
 					}
 				}
 			}

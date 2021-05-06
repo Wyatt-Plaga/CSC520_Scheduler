@@ -1,0 +1,22 @@
+This program generates a schedule based on user input in input.txt. The user should input how many classes they
+wish to take, which classes they wish to take (and how important each of those classes are), and which, if any,
+breaks they wish to have (and how important they are). When inputing break times, ensure that the time is listed
+with minutes, that there is a space between the time and AM/PM, etc. Copy example from line 8 exactly. 
+Classes can be of major CSC/GA/GD, numbered 1-799.
+
+To create a new class roster, simply call the "main" function inside the ClassGenerator class, and a completely
+new and random class roster will be made, with random days and times assigned to each class.
+
+To run the program, simply call the "main" function inside the Scheduler class. This will first try to find the
+optimal schedule by creating a random schedule and performing hill climbing as implemented in the "HillClimbing"
+class. The hill climbing algorithm makes up to 4 moves and restarts randomly 50 times.
+
+Next, the main function will try to find the optimal schedule by creating a random schedule and performing
+simulated annealing as implemented in the "SimmulatedAnnealing"class. The simulated annealing algorithm makes
+ up to 50 moves and restarts randomly 1000 times.
+ 
+If the grader wishes to only test one of these at a time, they need only comment out 19 & 22 for hill climbing or
+21 & 24 for simulated annealing.
+
+The "Schedule" class holds data on a given schedule, such as what classes are in it. The "Break" and "Class" classes
+hold similar data about breaks and classes respectively.

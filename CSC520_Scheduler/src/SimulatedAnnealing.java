@@ -1,22 +1,24 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class SimmulatedAnnealing {
+public class SimulatedAnnealing {
 	
 	Scheduler scheduler;
 	Schedule currentSchedule;
 	ArrayList<Schedule> bestCandidates = new ArrayList<Schedule>();
-	double numSteps = 100;
+	double numSteps = 50;
+	int effCount = 0;
 
-	SimmulatedAnnealing(Scheduler scheduler) {
+	SimulatedAnnealing(Scheduler scheduler) {
 		this.scheduler = scheduler;
-		for(int j=0; j<50; j++) {
+		for(int j=0; j<1000; j++) {
 			currentSchedule = scheduler.generateRandomSchedule(0);
 			for(int i=0; i<numSteps; i++) {
 				currentSchedule = currentSchedule.getAnnealedNeighbor(i, this);
-				//System.out.println(currentSchedule.getScore());
 			}
-			System.out.println(currentSchedule.getScore());
+			if(currentSchedule.getScore() > 100) {
+				effCount++;
+			}
 			bestCandidates.add(currentSchedule);
 		}
 		for(Schedule schedule : bestCandidates) {
@@ -32,9 +34,6 @@ public class SimmulatedAnnealing {
 		} else {
 			Random rand = new Random();
 			double functionOut = (1/(1+Math.exp(((origionalScore-newScore)/getTemperature(run)))));
-			if(functionOut * 100 != 50) {
-				//System.out.println(functionOut * 10);
-			}
 			if((rand.nextInt(99) + 1) < (functionOut * 100)) {
 				return true;
 			}
@@ -43,9 +42,7 @@ public class SimmulatedAnnealing {
 	}
 	
 	float getTemperature(float run) {
-		//return (float) ((1-(run+1)/numSteps)*100);
-		return (float) (100 * Math.pow(0.95,run));
-		//return (float) (100/run);
+		return (float) (Math.pow(0.95,run));
 	}
 	
 	Schedule getWinner() {

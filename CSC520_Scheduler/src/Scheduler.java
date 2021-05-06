@@ -12,12 +12,16 @@ public class Scheduler {
 	ArrayList<Break> breaks = new ArrayList<Break>();
 
 	public static void main(String[] args) {
+		System.out.println("Starting...");
 		Scheduler scheduler = new Scheduler();
 		scheduler.rosterIntake();
 		scheduler.fileIntake();
-//		HillClimbing search = new HillClimbing(scheduler);
-		SimmulatedAnnealing search = new SimmulatedAnnealing(scheduler);
-		search.printWinner();
+	    HillClimbing hillSearch = new HillClimbing(scheduler);
+		System.out.println("Hill Search Completed...");
+		SimulatedAnnealing aSearch = new SimulatedAnnealing(scheduler);
+		hillSearch.printWinner();
+		System.out.println();
+		aSearch.printWinner();
 	}
 	
 	void rosterIntake() {
@@ -40,7 +44,7 @@ public class Scheduler {
 	void fileIntake() {
 
 		try {
-			File inputFile = new File("filename.txt");
+			File inputFile = new File("input.txt");
 			Scanner inputReader = new Scanner(inputFile);
 			inputReader.nextLine();
 			desiredClasses = Integer.parseInt(inputReader.nextLine());
@@ -73,11 +77,6 @@ public class Scheduler {
 		for(int i=0; i<desiredClasses; i++) {
 			boolean scheduleProblem = false;
 			boolean matchingDesiredClass = true;
-//			if(random == 1) {
-//				System.out.println("1 chosen");
-//			} else {
-//				System.out.println("0 chosen");
-//			}
 			Class randomClass = allClassList.get(rand.nextInt(2397));
 			if((random == 0 && mode == 3) || mode == 1) {
 				for(Class klasse : desiredClassList) {
@@ -86,14 +85,6 @@ public class Scheduler {
 						i--;
 					}
 				}
-//				matchingDesiredClass = false;
-//				while(matchingDesiredClass == false) {
-//					for(Class klasse : desiredClassList) {
-//						if(randomClass.matchingClass(klasse)  || schedule.classes.size() >= desiredClassList.size()) {
-//							matchingDesiredClass = true;
-//						}
-//					}
-//				}
 			}
 			if((random == 1 && mode == 3) || mode == 2) {
 				scheduleProblem = false;
@@ -101,10 +92,8 @@ public class Scheduler {
 					if(randomClass.takesPlaceBetween(pause.startTime, pause.endTime)) {
 						scheduleProblem = true;
 					}
-					//15.25 end time class 15-18.75 beak
 				}
 			}
-			//change to match only good classes or only breaks
 			if(matchingDesiredClass && (mode == 1 || mode == 3) && schedule.isTimeDayFree(randomClass.startTime, randomClass.endTime, randomClass.day)) {
 				schedule.classes.add(randomClass);
 			}else if(!scheduleProblem  && (mode == 1 || mode == 2) && schedule.isTimeDayFree(randomClass.startTime, randomClass.endTime, randomClass.day)) {

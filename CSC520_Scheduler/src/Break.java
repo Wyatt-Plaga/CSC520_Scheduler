@@ -21,7 +21,6 @@ public class Break {
 			endTime += 12;
 		}
 		this.importance = Integer.parseInt(importance);
-		//System.out.println("Importance " + importance + " startTime " + startTime + " end time " + endTime);
 	}
 
 }
