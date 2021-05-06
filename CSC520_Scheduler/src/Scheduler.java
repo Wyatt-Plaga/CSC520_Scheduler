@@ -15,7 +15,8 @@ public class Scheduler {
 		Scheduler scheduler = new Scheduler();
 		scheduler.rosterIntake();
 		scheduler.fileIntake();
-		HillClimbing search = new HillClimbing(scheduler);
+//		HillClimbing search = new HillClimbing(scheduler);
+		SimmulatedAnnealing search = new SimmulatedAnnealing(scheduler);
 		search.printWinner();
 	}
 	
@@ -64,11 +65,55 @@ public class Scheduler {
 		}
 	}
 	
-	Schedule generateRandomSchedule() {
+	//mode 0: vanilla, mode 1: guaranteed classes, mode 2: guaranteed breaks, mode 3: random
+	Schedule generateRandomSchedule(int mode) {
 		Schedule schedule = new Schedule(this);
 		Random rand = new Random();
+		int random = rand.nextInt(2);
 		for(int i=0; i<desiredClasses; i++) {
-			schedule.classes.add(allClassList.get(rand.nextInt(2397)));
+			boolean scheduleProblem = false;
+			boolean matchingDesiredClass = true;
+//			if(random == 1) {
+//				System.out.println("1 chosen");
+//			} else {
+//				System.out.println("0 chosen");
+//			}
+			Class randomClass = allClassList.get(rand.nextInt(2397));
+			if((random == 0 && mode == 3) || mode == 1) {
+				for(Class klasse : desiredClassList) {
+					if(i<desiredClasses && !schedule.hasClass(klasse)) {
+						schedule.classes.add(klasse);
+						i--;
+					}
+				}
+//				matchingDesiredClass = false;
+//				while(matchingDesiredClass == false) {
+//					for(Class klasse : desiredClassList) {
+//						if(randomClass.matchingClass(klasse)  || schedule.classes.size() >= desiredClassList.size()) {
+//							matchingDesiredClass = true;
+//						}
+//					}
+//				}
+			}
+			if((random == 1 && mode == 3) || mode == 2) {
+				scheduleProblem = false;
+				for(Break pause : breaks) {
+					if(randomClass.takesPlaceBetween(pause.startTime, pause.endTime)) {
+						scheduleProblem = true;
+					}
+					//15.25 end time class 15-18.75 beak
+				}
+			}
+			//change to match only good classes or only breaks
+			if(matchingDesiredClass && (mode == 1 || mode == 3) && schedule.isTimeDayFree(randomClass.startTime, randomClass.endTime, randomClass.day)) {
+				schedule.classes.add(randomClass);
+			}else if(!scheduleProblem  && (mode == 1 || mode == 2) && schedule.isTimeDayFree(randomClass.startTime, randomClass.endTime, randomClass.day)) {
+				schedule.classes.add(randomClass);
+			} else if(mode ==0){
+				schedule.classes.add(randomClass);
+			} else {
+				i--;
+			}
 		}
 		return schedule;
 	}

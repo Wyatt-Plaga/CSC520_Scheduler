@@ -13,6 +13,15 @@ public class Schedule {
 		this.classes = classes;
 		this.scheduler = scheduler;
 	}
+	
+	boolean hasClass(Class klasse) {
+		for(Class meineKlasse : classes) {
+			if(klasse.matchingClass(meineKlasse)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	Schedule cloneMe() {
 		return new Schedule((ArrayList<Class>) classes.clone(), scheduler);
@@ -20,13 +29,20 @@ public class Schedule {
 
 	int getScore() {
 		if(classes.size() < scheduler.desiredClasses) {
-			return -10;
+			return -1000;
 		}
 		int score = 0;
 		for(Class desiredClass : scheduler.desiredClassList) {
 			for(Class takenClass : classes) {
 				if(takenClass.matchingClass(desiredClass)) {
 					score += desiredClass.importance;
+				}
+			}
+		}
+		for(Class class1 : classes) {
+			for(Class class2 : classes) {
+				if(!class1.matchingClass(class2) && class1.startTime == class2.startTime && class1.day.equals(class2.day)) {
+					score -= 10;
 				}
 			}
 		}
@@ -58,6 +74,18 @@ public class Schedule {
 		}
 		return true;
 	}
+	
+	boolean isTimeDayFree(double startTime, double endTime, String day) {
+		for(Class klasse : classes) {
+			if(startTime <= klasse.startTime && endTime >= klasse.startTime && day.equals(klasse.day)) {
+				return false;
+			}
+			if(startTime <= klasse.endTime && endTime >= klasse.endTime && day.equals(klasse.day)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	Schedule getBestNeighbor(int i) {
 		//Schedule output = new Schedule(scheduler);
@@ -69,6 +97,25 @@ public class Schedule {
 					clone.classes.remove(meineKlasse);
 					clone.classes.add(klasse);
 					if(clone.getScore() > output.getScore()) {
+						//System.out.println(i);
+						output = clone;
+					}
+				}
+			}
+		}
+		return output;
+	}
+	
+	Schedule getAnnealedNeighbor(int i, SimmulatedAnnealing algorithm) {
+		//Schedule output = new Schedule(scheduler);
+		Schedule output = this.cloneMe();
+		for(Class klasse : scheduler.allClassList) {
+			for(Class meineKlasse : classes) {
+				Schedule clone = this.cloneMe();
+				if(!hasClass(klasse.subject, klasse.number)) {
+					clone.classes.remove(meineKlasse);
+					clone.classes.add(klasse);
+					if(algorithm.pFunction(output.getScore(),clone.getScore(),i)) {
 						//System.out.println(i);
 						output = clone;
 					}

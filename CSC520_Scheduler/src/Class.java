@@ -22,6 +22,18 @@ public class Class {
 			}
 		}
 	}
+	//class from 10-11, input 10:30-11:30
+	//if class start time is greater than break start and less than break end
+	//15.25 end time class 15-18.75 beak
+	boolean takesPlaceBetween(double startTime, double endTime) {
+			if(startTime <= this.startTime && endTime >= this.startTime) {
+				return true;
+			}
+			if(startTime <= this.endTime && endTime >= this.endTime) {
+				return true;
+			}
+		return false;
+	}
 	
 	Class(Scheduler scheduler, String subject, String numString, String startTimeString, String startMeridian, String endTimeString, String endMeridian, String day) {
 		this.scheduler = scheduler;
